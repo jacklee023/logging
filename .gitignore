@@ -1,0 +1,5 @@
+csrc/
+log_*.log
+simv
+simv.daidir/
+ucli.key
