@@ -2,7 +2,7 @@ class Logging;
 
     typedef enum integer {RESET=0, BRIGHT=1, DIM=2, ITALIC=3, UNDERLINE=4, BLINK=5, REVERSE=7, HIDDEN=8, STRIKE=9} attr_t;
     typedef enum integer {BLACK=0, RED=1, GREEN=2, YELLOW=3, BLUE=4, PURPLE=5, CYAN=6, WHITE=7, DEFAULT=9} color_t;
-    typedef enum integer {DEBUG=10, INFO=20, WARN=30, ERROR=40, FATAL=50} level_t;
+    // typedef enum integer {DEBUG=10, INFO=20, WARN=30, ERROR=40, FATAL=50} level_t;
     typedef enum integer {TIME=90, FILE=91, LINE=92, HIER=93, NAME=94, MSG=95, SUMMARY=96} section_t;
     typedef enum logic   {DISABLE=0, ENABLE=1} flag_t;
     typedef enum integer {PASS=97, FAIL=98, TIMEOUT=99, UNKNOWN=100} status_t;
@@ -13,13 +13,21 @@ class Logging;
         color_t bg;
     } style_t;
 
+    typedef integer level_t;
+
+    const level_t DEBUG=10;
+    const level_t INFO=20;
+    const level_t WARN=30;
+    const level_t ERROR=40;
+    const level_t FATAL=50;
+
     protected style_t styles[integer]; // level_t, section_t, status_t
     protected integer counters[level_t];
     protected level_t levels[string];
     protected string  names[level_t];
     protected integer filehandles[level_t];
     protected string lognames[level_t];
-    protected level_t verbosity = INFO;
+    protected level_t verbosity;
 
     protected flag_t sections[section_t] = '{
         TIME : ENABLE,
@@ -32,8 +40,12 @@ class Logging;
 
     string banners[status_t][6];
 
-    function new(input level_t level=INFO);
-        this.verbosity = level;
+    function new(input level_t level=null);
+        if (level == null) begin
+            this.verbosity = INFO;
+        end else begin
+            this.verbosity = level;
+        end
 
         banners[PASS][0]    = "        ██████╗  █████╗ ███████╗███████╗\n";
         banners[PASS][1]    = "        ██╔══██╗██╔══██╗██╔════╝██╔════╝\n";

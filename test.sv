@@ -18,9 +18,9 @@ initial begin
     `define log_notice(msg)  log.display("notice",  msg, $sformatf("%m"), `__FILE__, `__LINE__);
     `define log_attn(msg)    log.display("attn",    msg, $sformatf("%m"), `__FILE__, `__LINE__);
 
-    log.setup_verbosity(Logging::DEBUG);
+    log.setup_verbosity(log.DEBUG);
     log.setup_section(Logging::LINE, Logging::ENABLE);
-    log.setup_filehandle(Logging::INFO, Logging::ENABLE);
+    log.setup_filehandle(log.INFO, Logging::ENABLE);
 
     `log_debug("demo string");
     `log_verbose("demo string");
