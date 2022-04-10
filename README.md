@@ -227,16 +227,16 @@ log.result(Logging::FAIL);
 
 ### log.display()
 
-![display](imgs\display.png)
+![display](imgs/display.png)
 
 ### log.summary()
 
-![summary](imgs\summary.png)
+![summary](imgs/summary.png)
 
 
 ### log.result()
 
-![result](imgs\result.png)
+![result](imgs/result.png)
 
 
 ## reference
