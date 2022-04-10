@@ -117,7 +117,7 @@ log.setup_filehandle(Logging::INFO, Logging::ENABLE);
 参数：
 + name: string类型, 级别名称
 + short: string类型, 级别名称(缩写)
-+ level: level_t类型, 指定级别
++ level: level_t类型, 指定级别, 自定义level时，建议取值范围在10-50之间
 + attr: attr_t类型, 指定属性
 + fg:  color_t类型，前景色
 + bg:  color_t类型，后景色
@@ -222,6 +222,12 @@ log.result(Logging::FAIL);
 ```systemverilog
 `log_teardown();
 ```
+
+6. 在log文件中查看
+
+由于ANSI escape字符在文件中会按字面值显示，失去着色效果，建议使用vim打开log文件
+同时vim需要安装插件[AnsiEsc](https://github.com/vim-scripts/AnsiEsc.vim)
+vim打开文件后，执行命令`:AnsiEsc`即可隐藏Ansi escape字符，同时恢复着色效果
 
 ## demo
 

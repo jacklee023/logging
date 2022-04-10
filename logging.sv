@@ -2,10 +2,9 @@ class Logging;
 
     typedef enum integer {RESET=0, BRIGHT=1, DIM=2, ITALIC=3, UNDERLINE=4, BLINK=5, REVERSE=7, HIDDEN=8, STRIKE=9} attr_t;
     typedef enum integer {BLACK=0, RED=1, GREEN=2, YELLOW=3, BLUE=4, PURPLE=5, CYAN=6, WHITE=7, DEFAULT=9} color_t;
-    // typedef enum integer {DEBUG=10, INFO=20, WARN=30, ERROR=40, FATAL=50} level_t;
-    typedef enum integer {TIME=90, FILE=91, LINE=92, HIER=93, NAME=94, MSG=95, SUMMARY=96} section_t;
     typedef enum logic   {DISABLE=0, ENABLE=1} flag_t;
-    typedef enum integer {PASS=97, FAIL=98, TIMEOUT=99, UNKNOWN=100} status_t;
+    typedef enum integer {PASS=0, FAIL=1, TIMEOUT=2, UNKNOWN=3} status_t;
+    typedef enum integer {TIME=4, FILE=5, LINE=6, HIER=7, NAME=8, MSG=9} section_t;
 
     typedef struct{
         attr_t attr;
@@ -85,7 +84,6 @@ class Logging;
         this.setup_style(FILE,    BRIGHT, YELLOW, DEFAULT);
         this.setup_style(LINE,    BRIGHT, RED,    DEFAULT);
         this.setup_style(HIER,    BRIGHT, WHITE,  DEFAULT);
-        this.setup_style(SUMMARY, BRIGHT, BLUE,   DEFAULT);
 
         this.setup_style(PASS,    BRIGHT, GREEN,  DEFAULT);
         this.setup_style(FAIL,    BRIGHT, RED,    DEFAULT);
@@ -172,7 +170,7 @@ class Logging;
     task summary();
         string msgq[$];
         integer fh = this.filehandles[INFO];
-        style_t style = this.styles[SUMMARY];
+        style_t style = this.styles[INFO];
 
         msgq.push_back($sformatf("logging counter:\n"));
 
@@ -192,6 +190,7 @@ class Logging;
     endtask
 
     protected task _write(input string msgs[], input style_t style, input integer fh=DISABLE);
+        // int => char: 27 -> Esc, number+48: [0-9] -> ['0'-'9']
         $write("%c[%c;3%c;4%cm", 27, style.attr+48, style.fg+48, style.bg+48);
         foreach (msgs[i]) begin
             $write(msgs[i]);

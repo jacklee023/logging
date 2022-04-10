@@ -42,7 +42,7 @@ initial begin
     log.result(Logging::PASS);
     log.result(Logging::FAIL);
     log.result(Logging::TIMEOUT);
-    // log.result(Logging::UNKNOWN);
+    log.result(Logging::UNKNOWN);
 
     `log_teardown;
 
